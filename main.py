@@ -50,7 +50,7 @@ def handle_message(event):
                 actions=[
                     PostbackAction(
 
-                    )
+                    ),
                     MessageAction(
                         label='message'
                         text='I understood'
