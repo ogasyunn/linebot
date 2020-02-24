@@ -46,7 +46,7 @@ def handle_message(event):
         event.reply_token,
         TemplateSendMessage(
             alt_text='ConfirmTemplate'(
-                text='are you ok?'
+                text='are you ok?',
                 actions=[
                     PostbackAction(
                         label='postback'
