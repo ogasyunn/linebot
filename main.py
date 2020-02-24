@@ -43,7 +43,7 @@ def callback():
 def handle_message(event):
 
     confirm_template_message = TemplateSendMessage(
-        alt_text='ConfirmTemplate'
+        alt_text='ConfirmTemplate',
         template=ConfirmTemplate(
             text='are you ok?',
             actions=[
