@@ -49,7 +49,9 @@ def handle_message(event):
                 text='are you ok?'
                 actions=[
                     PostbackAction(
-
+                        label='postback'
+                        display-text='postback text'
+                        data='action=buy&itemid=1'
                     ),
                     MessageAction(
                         label='message'
