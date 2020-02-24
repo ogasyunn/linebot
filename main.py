@@ -43,21 +43,22 @@ def callback():
 def handle_message(event):
 
     confirm_template_message = TemplateSendMessage(
-            alt_text='ConfirmTemplate'(
-                text='are you ok?',
-                actions=[
-                    PostbackAction(
-                        label='postback',
-                        display_text='postback text',
-                        data='action=buy&itemid=1'
-                    ),
-                    MessageAction(
-                        label='message',
-                        text='I understood'
-                    )
-                ]
-            )
+        alt_text='ConfirmTemplate'
+        alt_text=ConfirmTemplate(
+            text='are you ok?',
+            actions=[
+                PostbackAction(
+                    label='postback',
+                    display_text='postback text',
+                    data='action=buy&itemid=1'
+                ),
+                MessageAction(
+                    label='message',
+                    text='I understood'
+                )
+            ]
         )
+    )
 
     line_bot_api.reply_message(
         event.reply_token,
