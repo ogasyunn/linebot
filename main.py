@@ -112,7 +112,7 @@ def dealmessage(usermessage, user_id, messagetype):
             my_instrument = db.session.query(Instruments).filter(Instruments.userid == user_id).first()
             message = TextSendMessage(text=my_instrument.message)
 
-    elif messagtype == "group"
+    elif messagtype == "group":
         profile = line_bot_api.get_profile(user_id)
         answer = db.session.query(Answer)
         if db.session.query(Instruments).filter(Instruments.userid == user_id).first() == None:
