@@ -147,7 +147,7 @@ def handle_message(event):
 
 @handler.add(JoinEvent)
 def joinevent(event):
-    group_id = event.source.event_id
+    group_id = event.source.group_id
     member_ids_res = line_bot_api.get_group_member_ids(group_id)
     
     for memberid in event.member_ids_res.member_ids:
