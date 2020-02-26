@@ -67,7 +67,11 @@ def callback():
 
     return 'OK'
 
-def dealmessage(usermessage, user_id, messagetype):
+def dealmessage(event):
+
+    username = event.message.text
+    user_id = event.source.user_id
+    messagetype = event.cource.type
 
     if messagetype == "user":
 
@@ -165,7 +169,7 @@ def follow_event(event):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    sendmessage = dealmessage(event.message.text, event.source.user_id, event.source.type)
+    sendmessage = dealmessage(event)
     line_bot_api.reply_message(
         event.reply_token,
         sendmessage
