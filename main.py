@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, FollowEvent, TextMessage, TextSendMessage, ImageSendMessage, VideoSendMessage, StickerSendMessage, AudioSendMessage, TemplateSendMessage,
+    MessageEvent, FollowEvent, PostbackEvent, TextMessage, TextSendMessage, ImageSendMessage, VideoSendMessage, StickerSendMessage, AudioSendMessage, TemplateSendMessage,
     ConfirmTemplate, PostbackAction, MessageAction, 
 )
 from flask_sqlalchemy import SQLAlchemy
@@ -97,7 +97,7 @@ def dealmessage(usermessage, user_id):
     )
 
     if usermessage == "自己紹介":
-        message = TextSendMessage(text="次に送るメッセージを登録するね")
+        message = TextSendMessage(text="次に送るメッセージを自己紹介に登録するね")
         
         instruments.status = "rgisting"
         db.session.add(instruments)
