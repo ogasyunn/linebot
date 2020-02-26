@@ -33,7 +33,7 @@ class Instruments(db.Model):
     message = db.Column(db.String(100))
     status = db.Column(db.String(15))
 
-    def __init__(self, groupid, userid, message):
+    def __init__(self, groupid, userid, message, status):
         self.groupid = groupid
         self.userid = userid
         self.message = message
