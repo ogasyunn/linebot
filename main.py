@@ -62,7 +62,7 @@ def callback():
 
     return 'OK'
 
-@hanndler.add(FollowEvent)
+@handler.add(FollowEvent)
 def follow_event(event):
     line_bot_api.reply_message(
         event.reply_token,
