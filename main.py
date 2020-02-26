@@ -91,7 +91,7 @@ def dealmessage(usermessage, user_id):
                 PostbackAction(
                     label="これでいいよ",
                     display_text="これでいいよ",
-                    data"ok"
+                    data="ok"
                 )
             ]
         )
