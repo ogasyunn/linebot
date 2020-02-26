@@ -46,8 +46,8 @@ handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    userid = db.Column(db.String(80), unique=True)
-    message = db.Column(db.String(80), unique=True)
+    userid = db.Column(db.String(80))
+    message = db.Column(db.String(80))
 
     def __init__(self, userid, message):
         self.userid = userid
@@ -83,7 +83,7 @@ class User(db.Model):
 def handle_message(event):
 
     user = User(event.source.user_id, event,message.text)
-    db.session.add(User)
+    db.session.add(user)
     db.session.commit()
 
     sendmessages = []
