@@ -125,7 +125,7 @@ def dealmessage(usermessage, user_id, messagetype):
             
         else:
             instruments = db.session.query(Instruments).filter(Instruments.userid == user_id).first()
-            instruments.groupid = source.group_id
+            instruments.groupid = event.source.group_id
             instruments.icon = profile.pisture_url
             message = TextSendMessage(text="おっ、" + profile.display_name + "さんじゃないか\nこっちでもろしくね")
             
@@ -177,7 +177,7 @@ def joinevent(event):
     
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text="こんにちは！\nみなさんの名前を教えてください")
+        TextSendMessage(text="こんにちは！\nみなさんの名前を教えてください\n名前だけでいいよ！")
         )
 
 if __name__ == "__main__":
