@@ -88,9 +88,10 @@ def dealmessage(usermessage, user_id):
                     display_text="もう一回登録する",
                     data="retry"
                 ),
-                MessageAction(
+                PostbackAction(
                     label="これでいいよ",
-                    text="これでいいよ"
+                    display_text="これでいいよ",
+                    data"ok"
                 )
             ]
         )
@@ -106,12 +107,20 @@ def dealmessage(usermessage, user_id):
     return message
 @handler.add(PostbackEvent)
 def postbackevent(event):
-    instruments = db.session.query(Instruments).filter(Instruments.userid == event.source.user_id).first()
-    instruments.status = "registing"
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text="もう一度自己紹介を入力してね")
-        )
+    if event.postback.data == "retry":
+        instruments = db.session.query(Instruments).filter(Instruments.userid == event.source.user_id).first()
+        instruments.status = "registing"
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="もう一度自己紹介を入力してね")
+            )
+    elif event.postback.data == "ok":
+        instruments = db.session.query(Instruments).filter(Instruments.userid == event.source.user_id).first()
+        instruments.status = "registed"
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="登録しました")
+            )
     
 @handler.add(FollowEvent)
 def follow_event(event):
