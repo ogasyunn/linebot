@@ -39,7 +39,7 @@ class Instruments(db.Model):
         self.message = message
         self.status = status
 
-class Answer(dbModel):
+class Answer(db.Model):
     id = db.column(db.Integer, primary_key=True)
     answer = db.Column(db.String(80))
 
