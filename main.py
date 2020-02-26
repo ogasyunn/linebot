@@ -114,6 +114,8 @@ def postbackevent(event):
     if event.postback.data == "retry":
         instruments = db.session.query(Instruments).filter(Instruments.userid == event.source.user_id).first()
         instruments.status = "registing"
+        db.session.add(instruments)
+        db.session.commit()
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="もう一度自己紹介を入力してね")
@@ -121,6 +123,8 @@ def postbackevent(event):
     elif event.postback.data == "ok":
         instruments = db.session.query(Instruments).filter(Instruments.userid == event.source.user_id).first()
         instruments.status = "registed"
+        db.session.add(instruments)
+        db.session.commit()
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="登録しました")
