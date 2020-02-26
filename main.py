@@ -7,8 +7,8 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, FollowEvent, TextMessage, TextSendMessage, ImageSendMessage, VideoSendMessage, StickerSendMessage, AudioSendMessage, TemplateSendMessage,
-    ConfirmTemplate, PostbackAction, MessageAction
+    *, MessageEvent, FollowEvent, TextMessage, TextSendMessage, ImageSendMessage, VideoSendMessage, StickerSendMessage, AudioSendMessage, TemplateSendMessage,
+    ConfirmTemplate, PostbackAction, MessageAction, 
 )
 from flask_sqlalchemy import SQLAlchemy
 
