@@ -67,7 +67,7 @@ def dealmessage(usermessage, user_id):
     if db.session.query(Instruments).filter(Instruments.userid == user_id).first() == None:
         instruments = Instruments( None,user_id ,None ,None )
         db.session.add(instruments)
-        session.commit()
+        db.session.commit()
 
     instruments = db.session.query(Instruments).filter(Instruments.userid == user_id).first()
     answer = db.session.query(Answer)
