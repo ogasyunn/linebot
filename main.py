@@ -184,11 +184,4 @@ if __name__ == "__main__":
 #    app.run()
     port = int(os.getenv("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-    
-    
-    
-    
-    
-    
-    [SQL: SELECT instruments.id AS instruments_id, instruments.groupid AS instruments_groupid, instruments.userid AS instruments_userid, instruments.message AS instruments_message, instruments.status AS instruments_status, instruments.icon AS instruments_icon FROM instruments WHERE instruments.userid = ? LIMIT ? OFFSET ?]
 
