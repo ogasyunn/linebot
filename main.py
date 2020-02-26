@@ -103,6 +103,10 @@ def dealmessage(usermessage, user_id):
         instruments.status = "registing"
         db.session.add(instruments)
         db.session.commit()
+
+    elif usermessage == "自分の自己紹介":
+        my_instrment = db.session.query(Instruments).filter(Instruments.userid == user_id).first()
+        message = TextSendMessage(text=my_instruments.message)
         
     return message
 @handler.add(PostbackEvent)
