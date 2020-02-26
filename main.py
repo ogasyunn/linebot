@@ -44,6 +44,15 @@ LINE_CHANNEL_SECRET = os.environ["LINE_CHANNEL_SECRET"]
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    userid = db.Column(db.String(80), unique=True)
+    message = db.Column(db.String(80), unique=True)
+
+    def __init__(self, userid, message):
+        self.userid = userid
+        self.mwssage = message
+
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -60,7 +69,7 @@ def callback():
         abort(400)
 
     return 'OK'
-
+"""
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     userid = db.Column(db.String(80), unique=True)
@@ -69,7 +78,7 @@ class User(db.Model):
     def __init__(self, userid, message):
         self.userid = userid
         self.mwssage = message
-
+"""
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 
