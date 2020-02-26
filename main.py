@@ -82,7 +82,7 @@ class User(db.Model):
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 
-    user = User(event.source.user_id, event,message.text)
+    user = User(event.source.user_id, event.message.text)
     db.session.add(user)
     db.session.commit()
 
