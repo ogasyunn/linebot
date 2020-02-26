@@ -16,7 +16,7 @@ import os
 """
 import pymysql
 import pymysql.cursors
-"""
+
 connection = pymysql.connect(
         host='us-cdbr-iron-east-04.cleardb.net',
         user='bc9fde5ae25666:d6b61d67',
@@ -31,7 +31,7 @@ connection = pymysql.connect(
     finally:
         cursor.close()
         connection.close()
-
+"""
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db = SQLAlchemy(app)
