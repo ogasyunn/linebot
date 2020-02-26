@@ -148,13 +148,13 @@ def handle_message(event):
 @handler.add(JoinEvent)
 def joinevent(event):
     group_id = event.source.group_id
-    member_ids_res = line_bot_api.get_group_member_ids(group_id)
+    ##member_ids_res = line_bot_api.get_group_member_ids(group_id)
     
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="こんにちは！")
         )
-    
+    """
     for memberid in event.member_ids_res.member_ids:
         if db.session.query(Instruments).filter(Instruments.userid == memberid).first() == None:
             instruments = Instruments(None, memberid, group_id, None)
@@ -165,6 +165,7 @@ def joinevent(event):
         
         db.session.add(instrumets)
         db.session.commit()
+    """
 
 if __name__ == "__main__":
 #    app.run()
