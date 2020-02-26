@@ -91,7 +91,7 @@ def handle_message(event):
     messages = db.session.query(User).all()
     for message in messages:
         sendmessages.append(TextSendMessage(message.message))
-    line_bot_api.reply_message(event.reply_token,sendmessages)
+    line_bot_api.reply_message(event.reply_token,sendmessages[-5:])
 """
     confirm_template_message = TemplateSendMessage(
         alt_text='Confirm Template',
