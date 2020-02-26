@@ -80,7 +80,7 @@ def dealmessage(usermessage, user_id):
         
         # 確認項目入れる
 
-    if usermessage = "自己紹介":
+    if usermessage == "自己紹介":
         message = "次に送るメッセージを登録するね"
         
         instruments.status = "rgisting"
