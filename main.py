@@ -40,7 +40,7 @@ class Instruments(db.Model):
         self.status = status
 
 class Answer(db.Model):
-    id = db.column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     answer = db.Column(db.String(80))
 
     def __init__(self, answer):
