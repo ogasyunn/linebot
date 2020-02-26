@@ -82,6 +82,7 @@ def handle_message(event):
     messages = db.session.query(User).all()
     for message in messages:
         sendmessages.append(TextSendMessage(message))
+    line_bot_api.reply_message(event.reply_token,sendmessages)
 """
     confirm_template_message = TemplateSendMessage(
         alt_text='Confirm Template',
@@ -102,7 +103,7 @@ def handle_message(event):
     )
 """
 
-    line_bot_api.reply_message(event.reply_token,sendmessages )
+   ## line_bot_api.reply_message(event.reply_token,sendmessages)
 
 if __name__ == "__main__":
 #    app.run()
