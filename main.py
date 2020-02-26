@@ -106,7 +106,7 @@ def dealmessage(usermessage, user_id):
 
     elif usermessage == "自分の自己紹介":
         my_instrument = db.session.query(Instruments).filter(Instruments.userid == user_id).first()
-        message = TextSendMessage(text=my_instruments.message)
+        message = TextSendMessage(text=my_instrument.message)
         
     return message
 @handler.add(PostbackEvent)
