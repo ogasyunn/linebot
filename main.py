@@ -25,17 +25,19 @@ LINE_CHANNEL_SECRET = os.environ["LINE_CHANNEL_SECRET"]
 
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
-"""
+
 class Instruments(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     groupid = db.Column(db.string(80))
     userid = db.Column(db.String(80))
     message = db.Column(db.String(100))
+    status = db.Column(db.String(15))
 
     def __init__(self, groupid, userid, message):
         self.groupid = groupid
         self.userid = userid
         self.message = message
+        self.status = status
 
 class Answer(dbModel):
     id = db.column(db.Integer, primary_key=True)
@@ -43,7 +45,6 @@ class Answer(dbModel):
 
     def __init__(self, answer):
         self.answer = answer
-"""
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -62,6 +63,30 @@ def callback():
 
     return 'OK'
 
+def dealmessage(usermessage, user_id):
+    if db.session.query(Instruments).filter(Instruments.userid == "user_id").first() == none :
+        instruments.userid = "user_id"
+        db.session.add(instruments)
+        session.commit()
+
+    instruments = db.session.query(Instruments).filter(Instruments.userid == "user_id").first()
+    answer = db.session.query(Answer)
+    
+    if instruments.status == "registing"
+        instruments.message = usermessage
+        instruments.status == "registed"
+        db.session.add(instruments)
+        db.session.commit()
+        
+        # 確認項目入れる
+
+    if usermessage = "自己紹介":
+        message = "次に送るメッセージを登録するね"
+        
+        instruments.status = "rgisting"
+        db.session.add(instruments)
+        db.session.commit()
+    
 @handler.add(FollowEvent)
 def follow_event(event):
     line_bot_api.reply_message(
@@ -71,9 +96,11 @@ def follow_event(event):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    profile = line_bot_api.get_profile(user_id)
+    sendmessage = dealmessage(event.message.text, profile)
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text="こんばんは！")
+        TextSendMessage(text=sendmessage)
         )
 
 if __name__ == "__main__":
