@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    *, MessageEvent, FollowEvent, TextMessage, TextSendMessage, ImageSendMessage, VideoSendMessage, StickerSendMessage, AudioSendMessage, TemplateSendMessage,
+    MessageEvent, FollowEvent, TextMessage, TextSendMessage, ImageSendMessage, VideoSendMessage, StickerSendMessage, AudioSendMessage, TemplateSendMessage,
     ConfirmTemplate, PostbackAction, MessageAction, 
 )
 from flask_sqlalchemy import SQLAlchemy
@@ -96,7 +96,7 @@ def follow_event(event):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    profile = line_bot_api.get_profile(user_id)
+    profile = line_bot_api.get_profile(event.source.userid)
     sendmessage = dealmessage(event.message.text, profile)
     line_bot_api.reply_message(
         event.reply_token,
