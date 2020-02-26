@@ -64,12 +64,12 @@ def callback():
     return 'OK'
 
 def dealmessage(usermessage, user_id):
-    if db.session.query(Instruments).filter(Instruments.userid == "user_id").first() == NoneType:
+    if db.session.query(Instruments).filter(Instruments.userid == user_id).first() == None:
         instruments.userid = user_id
         db.session.add(instruments)
         session.commit()
 
-    instruments = db.session.query(Instruments).filter(Instruments.userid == "user_id").first()
+    instruments = db.session.query(Instruments).filter(Instruments.userid == user_id).first()
     answer = db.session.query(Answer)
     
     if instruments.status == "registing":
@@ -96,8 +96,7 @@ def follow_event(event):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    profile = line_bot_api.get_profile(event.source.user_id)
-    sendmessage = dealmessage(event.message.text, profile)
+    sendmessage = dealmessage(event.message.text, event.source.user_id)
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=sendmessage)
