@@ -25,7 +25,7 @@ LINE_CHANNEL_SECRET = os.environ["LINE_CHANNEL_SECRET"]
 
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
-
+"""
 class Instruments(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     groupid = db.Column(db.string(80))
@@ -43,6 +43,7 @@ class Answer(dbModel):
 
     def __init__(self, answer):
         self.answer = answer
+"""
 
 @app.route("/callback", methods=['POST'])
 def callback():
