@@ -69,7 +69,8 @@ def callback():
 
 def dealmessage(event):
 
-    username = event.message.text
+    usermessage = event.message.text
+    username = event.source.display_name
     user_id = event.source.user_id
     messagetype = event.source.type
 
