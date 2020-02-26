@@ -99,7 +99,7 @@ def dealmessage(usermessage, user_id):
     if usermessage == "自己紹介":
         message = TextSendMessage(text="次に送るメッセージを自己紹介に登録するね")
         
-        instruments.status = "rgisting"
+        instruments.status = "registing"
         db.session.add(instruments)
         db.session.commit()
         
