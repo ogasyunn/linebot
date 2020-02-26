@@ -12,6 +12,24 @@ from linebot.models import (
 )
 import os
 
+import pymysql
+import pymysql.cursors
+ 
+connection = pymysql.connect(
+        host='us-cdbr-iron-east-04.cleardb.net',
+        user='bc9fde5ae25666:d6b61d67',
+        password='d6b61d67',
+        db='mysql',
+        charset='utf8',
+        cursorclass=pymysql.cursors.DictCursor)
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute(sql)
+            results = cursor.fetchall()                
+    finally:
+        cursor.close()
+        connection.close()
+
 app = Flask(__name__)
 
 #環境変数取得
