@@ -154,7 +154,7 @@ def joinevent(event):
         if db.session.query(Instruments).filter(Instruments.userid == memberid).first() == None:
             instruments = Instruments(None, memberid, group_id, None)
             
-        elif db.session.query(Instruments).filter(Instruments.userid == memberid).first() =! None:
+        elif db.session.query(Instruments).filter(Instruments.userid == memberid).first() != None:
             instruments = db.session.query(Instruments).filter(Instruments.userid == memberid).first()
             instruments.groupid = group_id
         
