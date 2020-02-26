@@ -113,19 +113,24 @@ def dealmessage(usermessage, user_id, messagetype):
             message = TextSendMessage(text=my_instrument.message)
 
     elif messagtype == "group":
+
         profile = line_bot_api.get_profile(user_id)
         answer = db.session.query(Answer)
         if db.session.query(Instruments).filter(Instruments.userid == user_id).first() == None:
             profile = line_bot_api.get_profile(user_id)
             instruments = Instruments( None,user_id ,None ,event.source.group_id ,profile.picture_url)
+            message = TextSendMessage(text="教えてくれてありがとう！\nよろしくね" + profile.display_name + "さん\n個人のほうでも追加しといてね")
             
         else:
             instruments = db.session.query(Instruments).filter(Instruments.userid == user_id).first()
             instruments.groupid = source.group_id
             instruments.icon = profile.pisture_url
+            message = TextSendMessage(text="おっ、" + profile.display_name + "さんじゃないか\nこっちでもろしくね")
             
         db.session.add(instruments)
         db.session.commit()
+        
+        
         
     return message
 @handler.add(PostbackEvent)
