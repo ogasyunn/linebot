@@ -86,6 +86,8 @@ def dealmessage(usermessage, user_id):
         instruments.status = "rgisting"
         db.session.add(instruments)
         db.session.commit()
+        
+    return message
     
 @handler.add(FollowEvent)
 def follow_event(event):
