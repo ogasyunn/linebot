@@ -69,7 +69,6 @@ def follow_event(event):
         )
 
 def register():
-    groupid = 
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
