@@ -51,7 +51,7 @@ class User(db.Model):
 
     def __init__(self, userid, message):
         self.userid = userid
-        self.mwssage = message
+        self.message = message
 
 @app.route("/callback", methods=['POST'])
 def callback():
