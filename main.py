@@ -78,16 +78,40 @@ def dealmessage(usermessage, user_id):
         db.session.add(instruments)
         db.session.commit()
         
-        # 確認項目入れる
+        message = TemplateSendMessage(
+        alt_text='Confirm Template',
+        template=ConfirmTemplate(
+            text="自己紹介は\n" + usermessage + "\nでいいですか？",
+            actions=[
+                PostbackAction(
+                    label="もう一回登録する",
+                    display_text="もう一回登録する",
+                    data="retry"
+                ),
+                MessageAction(
+                    label="これでいいよ",
+                    text="これでいいよ"
+                )
+            ]
+        )
+    )
 
     if usermessage == "自己紹介":
-        message = "次に送るメッセージを登録するね"
+        message = TextSendMessage(text="次に送るメッセージを登録するね")
         
         instruments.status = "rgisting"
         db.session.add(instruments)
         db.session.commit()
         
     return message
+@handler.add(PostbackEvent)
+def postbackevent(event):
+    instruments = db.session.query(Instruments).filter(Instruments.userid == user_id).first()
+    instruments.status = "registing"
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text="もう一度自己紹介を入力してね")
+        )
     
 @handler.add(FollowEvent)
 def follow_event(event):
@@ -101,7 +125,7 @@ def handle_message(event):
     sendmessage = dealmessage(event.message.text, event.source.user_id)
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=sendmessage)
+        sendmessage
         )
 
 if __name__ == "__main__":
