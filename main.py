@@ -32,12 +32,14 @@ class Instruments(db.Model):
     userid = db.Column(db.String(80))
     message = db.Column(db.String(100))
     status = db.Column(db.String(15))
+    icon = db.Column(db.String(200))
 
-    def __init__(self, groupid, userid, message, status):
+    def __init__(self, groupid, userid, message, status, icon):
         self.groupid = groupid
         self.userid = userid
         self.message = message
         self.status = status
+        self.icon = icon
 
 class Answer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -63,50 +65,68 @@ def callback():
 
     return 'OK'
 
-def dealmessage(usermessage, user_id):
-    if db.session.query(Instruments).filter(Instruments.userid == user_id).first() == None:
-        instruments = Instruments( None,user_id ,None ,None )
-        db.session.add(instruments)
-        db.session.commit()
+def dealmessage(usermessage, user_id, group_id):
 
-    instruments = db.session.query(Instruments).filter(Instruments.userid == user_id).first()
-    answer = db.session.query(Answer)
-    
-    if instruments.status == "registing":
-        instruments.message = usermessage
-        instruments.status == "registed"
-        db.session.add(instruments)
-        db.session.commit()
+    if group_id == None:
+
+        if db.session.query(Instruments).filter(Instruments.userid == user_id).first() == None:
+            instruments = Instruments(None ,user_id ,None ,None ,None)
+            db.session.add(instruments)
+            db.session.commit()
+
+        instruments = db.session.query(Instruments).filter(Instruments.userid == user_id).first()
         
-        message = TemplateSendMessage(
-        alt_text='Confirm Template',
-        template=ConfirmTemplate(
-            text="自己紹介は\n" + usermessage + "\nでいいですか？",
-            actions=[
-                PostbackAction(
-                    label="もう一回登録する",
-                    display_text="もう一回登録する",
-                    data="retry"
-                ),
-                PostbackAction(
-                    label="これでいいよ",
-                    display_text="これでいいよ",
-                    data="ok"
-                )
-            ]
+        if instruments.status == "registing":
+            instruments.message = usermessage
+            instruments.status == "registed"
+            db.session.add(instruments)
+            db.session.commit()
+            
+            message = TemplateSendMessage(
+            alt_text='Confirm Template',
+            template=ConfirmTemplate(
+                text="自己紹介は\n" + usermessage + "\nでいいですか？",
+                actions=[
+                    PostbackAction(
+                        label="もう一回登録する",
+                        display_text="もう一回登録する",
+                        data="retry"
+                    ),
+                    PostbackAction(
+                        label="これでいいよ",
+                        display_text="これでいいよ",
+                        data="ok"
+                    )
+                ]
+            )
         )
-    )
 
-    if usermessage == "自己紹介":
-        message = TextSendMessage(text="次に送るメッセージを自己紹介に登録するね")
-        
-        instruments.status = "registing"
-        db.session.add(instruments)
-        db.session.commit()
+        if usermessage == "自己紹介":
+            message = TextSendMessage(text="次に送るメッセージを自己紹介に登録するね")
+            
+            instruments.status = "registing"
+            db.session.add(instruments)
+            db.session.commit()
 
-    elif usermessage == "自分の自己紹介":
-        my_instrument = db.session.query(Instruments).filter(Instruments.userid == user_id).first()
-        message = TextSendMessage(text=my_instrument.message)
+        elif usermessage == "自分の自己紹介":
+            my_instrument = db.session.query(Instruments).filter(Instruments.userid == user_id).first()
+            message = TextSendMessage(text=my_instrument.message)
+
+    else:
+        profile = line_bot_api.get_profile(user_id)
+        answer = db.session.query(Answer)#####
+        if db.session.query(Instruments).filter(Instruments.userid == user_id).first() == None:
+            profile = line_bot_api.get_profile(user_id)
+            instruments = Instruments( None,user_id ,None ,group_id ,profile.picture_url)
+            db.session.add(instruments)
+            db.session.commit()
+            
+        else:
+            instruments = db.session.query(Instruments).filter(Instruments.userid == user_id).first()
+            instruments.groupid = group_id
+            instruments.icon = profile.pisture_url
+            db.session.add(instruments)
+            db.session.commit()
         
     return message
 @handler.add(PostbackEvent)
@@ -139,7 +159,7 @@ def follow_event(event):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    sendmessage = dealmessage(event.message.text, event.source.user_id, )
+    sendmessage = dealmessage(event.message.text, event.source.user_id, event.source.group_id)
     line_bot_api.reply_message(
         event.reply_token,
         sendmessage
@@ -148,24 +168,11 @@ def handle_message(event):
 @handler.add(JoinEvent)
 def joinevent(event):
     group_id = event.source.group_id
-    ##member_ids_res = line_bot_api.get_group_member_ids(group_id)
     
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text="こんにちは！")
+        TextSendMessage(text="こんにちは！\nみなさんの名前を教えてください")
         )
-    """
-    for memberid in event.member_ids_res.member_ids:
-        if db.session.query(Instruments).filter(Instruments.userid == memberid).first() == None:
-            instruments = Instruments(None, memberid, group_id, None)
-            
-        elif db.session.query(Instruments).filter(Instruments.userid == memberid).first() != None:
-            instruments = db.session.query(Instruments).filter(Instruments.userid == memberid).first()
-            instruments.groupid = group_id
-        
-        db.session.add(instrumets)
-        db.session.commit()
-    """
 
 if __name__ == "__main__":
 #    app.run()
