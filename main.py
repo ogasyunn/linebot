@@ -28,7 +28,7 @@ handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
 class Instruments(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    groupid = db.Column(db.string(80))
+    groupid = db.Column(db.String(80))
     userid = db.Column(db.String(80))
     message = db.Column(db.String(100))
     status = db.Column(db.String(15))
