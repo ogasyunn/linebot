@@ -71,7 +71,7 @@ def dealmessage(event):
 
     username = event.message.text
     user_id = event.source.user_id
-    messagetype = event.cource.type
+    messagetype = event.source.type
 
     if messagetype == "user":
 
