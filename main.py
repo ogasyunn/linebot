@@ -106,7 +106,7 @@ def dealmessage(usermessage, user_id):
     return message
 @handler.add(PostbackEvent)
 def postbackevent(event):
-    instruments = db.session.query(Instruments).filter(Instruments.userid == user_id).first()
+    instruments = db.session.query(Instruments).filter(Instruments.userid == event.source.user_id).first()
     instruments.status = "registing"
     line_bot_api.reply_message(
         event.reply_token,
