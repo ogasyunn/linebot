@@ -65,9 +65,9 @@ def callback():
 
     return 'OK'
 
-def dealmessage(usermessage, user_id, group_id):
+def dealmessage(usermessage, user_id, messagetype):
 
-    if group_id == None:
+    if messagetype == "user":
 
         if db.session.query(Instruments).filter(Instruments.userid == user_id).first() == None:
             instruments = Instruments(None ,user_id ,None ,None ,None)
@@ -112,21 +112,20 @@ def dealmessage(usermessage, user_id, group_id):
             my_instrument = db.session.query(Instruments).filter(Instruments.userid == user_id).first()
             message = TextSendMessage(text=my_instrument.message)
 
-    else:
+    elif messagtype == "group"
         profile = line_bot_api.get_profile(user_id)
-        answer = db.session.query(Answer)#####
+        answer = db.session.query(Answer)
         if db.session.query(Instruments).filter(Instruments.userid == user_id).first() == None:
             profile = line_bot_api.get_profile(user_id)
-            instruments = Instruments( None,user_id ,None ,group_id ,profile.picture_url)
-            db.session.add(instruments)
-            db.session.commit()
+            instruments = Instruments( None,user_id ,None ,event.source.group_id ,profile.picture_url)
             
         else:
             instruments = db.session.query(Instruments).filter(Instruments.userid == user_id).first()
-            instruments.groupid = group_id
+            instruments.groupid = source.group_id
             instruments.icon = profile.pisture_url
-            db.session.add(instruments)
-            db.session.commit()
+            
+        db.session.add(instruments)
+        db.session.commit()
         
     return message
 @handler.add(PostbackEvent)
@@ -159,7 +158,7 @@ def follow_event(event):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    sendmessage = dealmessage(event.message.text, event.source.user_id, event.source.group_id)
+    sendmessage = dealmessage(event.message.text, event.source.user_id, event.source.type)
     line_bot_api.reply_message(
         event.reply_token,
         sendmessage
