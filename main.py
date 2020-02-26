@@ -65,7 +65,7 @@ def callback():
 
 def dealmessage(usermessage, user_id):
     if db.session.query(Instruments).filter(Instruments.userid == "user_id").first() == "":
-        instruments.userid = "user_id"
+        instruments.userid = user_id
         db.session.add(instruments)
         session.commit()
 
