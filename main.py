@@ -139,11 +139,27 @@ def follow_event(event):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    sendmessage = dealmessage(event.message.text, event.source.user_id)
+    sendmessage = dealmessage(event.message.text, event.source.user_id, )
     line_bot_api.reply_message(
         event.reply_token,
         sendmessage
         )
+
+@handler.add(JoinEvent)
+def joinevent(event):
+    group_id = event.source.event_id
+    member_ids_res = line_bot_api.get_group_member_ids(group_id)
+    
+    for memberid in event.member_ids_res.member_ids:
+        if db.session.query(Instruments).filter(Instruments.userid == memberid).first() == None:
+            instruments = Instruments(None, memberid, group_id, None)
+            
+        elif db.session.query(Instruments).filter(Instruments.userid == memberid).first() =! None:
+            instruments = db.session.query(Instruments).filter(Instruments.userid == memberid).first()
+            instruments.groupid = group_id
+        
+        db.session.add(instrumets)
+        db.session.commit()
 
 if __name__ == "__main__":
 #    app.run()
