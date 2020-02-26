@@ -123,8 +123,7 @@ def dealmessage(event):
         profile = line_bot_api.get_profile(user_id)
         answer = db.session.query(Answer)
         if db.session.query(Instruments).filter(Instruments.userid == user_id).first() == None:
-            profile = line_bot_api.get_profile(user_id)
-            instruments = Instruments( None,user_id ,None ,event.source.group_id ,profile.picture_url)
+            instruments = Instruments( event.source.group_id,user_id ,None ,None ,profile.picture_url)
             message = TextSendMessage(text="教えてくれてありがとう！\nよろしくね" + profile.display_name + "さん\n個人のほうでも追加しといてね")
             
         else:
@@ -181,7 +180,7 @@ def joinevent(event):
     
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text="こんにちは！\nみなさんの名前を教えてください\n名前だけでいいよ！")
+        TextSendMessage(text="こんにちは！\n子のアカウントを追加してからみなさんの名前を教えてください")
         )
 
 if __name__ == "__main__":
