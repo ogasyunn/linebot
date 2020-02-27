@@ -151,8 +151,8 @@ def quiz(event):
     quizmember = db.session.query(Instruments.userid).filter(Instruments.status == "registed").all()
     quizmembericon = db.session.query(Instruments.icon).filter(Instruments.status == "registed").all()
     
-    count = len(instruments) - 1
-    num = random.randint(0 ,count)
+    count = len(instruments)
+    num = random.randint(0 ,count - 1)
     answer = Answer(quizmember[num].userid)
     db.session.add(answer)
     db.session.commit()
@@ -205,26 +205,26 @@ def postbackevent(event):
         TextSendMessage(text="違うよ！！")
         )
         
-        ###
+
         instruments = db.session.query(Instruments).filter(Instruments.status == "registed").all()
-    quizmember = db.session.query(Instruments.userid).filter(Instruments.status == "registed").all()
-    quizmembericon = db.session.query(Instruments.icon).filter(Instruments.status == "registed").all()
-    
-    count = len(instruments)
-    
-    memberinstruments = db.session.query(Instruments).filter(Instruments.userid == quizmember[num].userid).first()
-    
-    contents = []
-    
-    for i in range(count):
-        profile = line_bot_api.get_profile(quizmember[i].userid)
-        quizmembername = profile.display_name
-        item = QuickReplyButton(action=PostbackAction(imageUrl = quizmembericon[i].icon, label = quizmembername, display_text = quizmembername + "さん", data = quizmember[i].userid))
-        contents.append(item)
-    
-    message = TextSendMessage(text = memberinstruments.message, quick_reply=QuickReply(items = contents))
-    
-    ###
+        quizmember = db.session.query(Instruments.userid).filter(Instruments.status == "registed").all()
+        quizmembericon = db.session.query(Instruments.icon).filter(Instruments.status == "registed").all()
+        
+        count = len(instruments)
+        
+        memberinstruments = db.session.query(Instruments).filter(Instruments.userid == quizmember[num].userid).first()
+        
+        contents = []
+        
+        for i in range(count):
+            profile = line_bot_api.get_profile(quizmember[i].userid)
+            quizmembername = profile.display_name
+            item = QuickReplyButton(action=PostbackAction(imageUrl = quizmembericon[i].icon, label = quizmembername, display_text = quizmembername + "さん", data = quizmember[i].userid))
+            contents.append(item)
+        
+        message = TextSendMessage(text = memberinstruments.message, quick_reply=QuickReply(items = contents))
+
+
 @handler.add(FollowEvent)
 def follow_event(event):
     line_bot_api.reply_message(
