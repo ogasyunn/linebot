@@ -157,7 +157,7 @@ def quiz(event):
     
     memberinstruments = db.session.quary(Instruments).filter(Instruments.userid == answer).first()
     
-    contents = list(range(13))
+    contents = []
     
     for i in range(count):
         quizmembername = enent.source.quizemember[i]
