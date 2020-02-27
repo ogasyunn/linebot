@@ -156,7 +156,7 @@ def quiz(event):
     db.session.add(answer)
     db.session.commit()
     
-    memberinstruments = db.session.query(Instruments).filter(Instruments.userid == answer).first()
+    memberinstruments = db.session.query(Instruments).filter(Instruments.userid == quizmember[num]).first()
     
     contents = []
     
