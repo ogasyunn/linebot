@@ -161,7 +161,8 @@ def quiz(event):
     contents = []
     
     for i in range(count):
-        quizmembername = event.source.quizmember[i]
+        answersid = quizmember[i]
+        quizmembername = event.source.answersid
         item = QuickReplyButton(action=PostbackAction(imageUrl = quizmembericon[i], label = quizmembername, display_text = quizmembername + "さん", data = quizemember[i]))
         contents.append(item)
     
