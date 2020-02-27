@@ -145,7 +145,7 @@ def dealmessage(event):
 
 def quiz(event):
     
-    instruments = db.session.query(Instruments).filter(Instruments.status == "registed").all()
+    instruments = db.session.query(Instruments).filter(Instruments.status == "registed").first()
     quizmember = instruments.userid
     quizmembericon = instruments.icon
     
