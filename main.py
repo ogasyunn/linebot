@@ -152,7 +152,7 @@ def quiz(event):
     
     count = len(instruments)
     num = random.randint(0 ,count) - 1
-    answer = Answer(quizmember[num]userid)
+    answer = Answer(quizmember[num].userid)
     db.session.add(answer)
     db.session.commit()
     
