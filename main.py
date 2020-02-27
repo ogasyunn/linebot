@@ -146,11 +146,11 @@ def dealmessage(event):
 
 def quiz(event):
     
-    instruments = db.session.query(Instruments).filter(Instruments.status == "registed").first()
-    quizmember = instruments.userid
-    quizmembericon = instruments.icon
+    instruments = db.session.query(Instruments).filter(Instruments.status == "registed").all()
+    quizmember = db.session.query(Instruments.userid).filter(Instruments.status == "registed").all()
+    quizmembericon = db.session.query(Instruments.icon).filter(Instruments.status == "registed").all()
     
-    count = len(db.session.query(Instruments).filter(Instruments.status == "registed").all())
+    count = len(instruments)
     num = random.randint(0 ,count)
     answer = Answer(quizmember[num])
     db.session.add(answer)
