@@ -128,15 +128,15 @@ def dealmessage(event):
             instruments = Instruments( event.source.group_id,user_id ,None ,None ,profile.picture_url)
             message = TextSendMessage(text="教えてくれてありがとう！\nよろしくね" + profile.display_name + "さん\n個人のほうで　自己紹介　って言ってみて")
             
+        elif message == "問題":
+                
+            message = quiz(event)
+        
         elif db.session.query(Instruments).filter(Instruments.userid == user_id).first() != None:
             instruments = db.session.query(Instruments).filter(Instruments.userid == user_id).first()
             instruments.groupid = event.source.group_id
             instruments.icon = profile.picture_url
             message = TextSendMessage(text="おっ、" + profile.display_name + "さんじゃないか\nこっちでもろしくね")
-        
-        elif message == "問題":
-                
-            message = quiz(event)
 
         db.session.add(instruments)
         db.session.commit()
