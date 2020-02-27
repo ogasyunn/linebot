@@ -152,18 +152,18 @@ def quiz(event):
     
     count = len(instruments)
     num = random.randint(0 ,count) - 1
-    answer = Answer(quizmember[num])
+    answer = Answer(quizmember[num]userid)
     db.session.add(answer)
     db.session.commit()
     
-    memberinstruments = db.session.query(Instruments).filter(Instruments.userid == quizmember[num]).first()
+    memberinstruments = db.session.query(Instruments).filter(Instruments.userid == quizmember[num].userid).first()
     
     contents = []
     
     for i in range(count):
-        profile = line_bot_api.get_profile(quizmember[i])
+        profile = line_bot_api.get_profile(quizmember[i].userid)
         quizmembername = profile.display_name
-        item = QuickReplyButton(action=PostbackAction(imageUrl = quizmembericon[i], label = quizmembername, display_text = quizmembername + "さん", data = quizemember[i]))
+        item = QuickReplyButton(action=PostbackAction(imageUrl = quizmembericon[i].icon, label = quizmembername, display_text = quizmembername + "さん", data = quizmember[i].userid))
         contents.append(item)
     
     message = TextSendMessage(text = memberinstruments.message, quick_reply=QuickReply(items = contents))
