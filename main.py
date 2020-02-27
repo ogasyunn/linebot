@@ -128,7 +128,7 @@ def dealmessage(event):
             instruments = Instruments( event.source.group_id,user_id ,None ,None ,profile.picture_url)
             message = TextSendMessage(text="教えてくれてありがとう！\nよろしくね" + profile.display_name + "さん\n個人のほうで　自己紹介　って言ってみて")
             
-        elif message == "問題":
+        elif usermessage == "問題":
                 
             message = quiz(event)
         
