@@ -188,7 +188,7 @@ def postbackevent(event):
             event.reply_token,
             TextSendMessage(text="登録しました")
             )
-    elif event.postback.data == 
+    elif event.postback.data == db.session.quary(Instruments).filter(Instruments.userid == answer).first().answer
     
 @handler.add(FollowEvent)
 def follow_event(event):
