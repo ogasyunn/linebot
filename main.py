@@ -173,9 +173,9 @@ def quiz(event):
 
 @handler.add(PostbackEvent)
 def postbackevent(event):
-    answer = db.session.query(Answer).first()
+    answer = db.session.query(Answer).all()
     print(event.postback.data)
-    print(answer.answer)
+    print(answer[-1].answer)
     if event.postback.data == "retry":
         instruments = db.session.query(Instruments).filter(Instruments.userid == event.source.user_id).first()
         instruments.status = "registing"
@@ -194,12 +194,12 @@ def postbackevent(event):
             event.reply_token,
             TextSendMessage(text="登録しました")
             )
-    elif event.postback.data == answer.answer:
+    elif event.postback.data == answer[-1].answer:
         line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="正解！！！")
         )
-    elif event.postback.data != answer.answer:
+    elif event.postback.data != answer[-1].answer:
         line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="違うよ！！")
