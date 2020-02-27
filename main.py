@@ -175,6 +175,7 @@ def quiz(event):
 def postbackevent(event):
     answer = db.session.query(Answer).first()
     print(event.postback.data)
+    print(answer.answer)
     if event.postback.data == "retry":
         instruments = db.session.query(Instruments).filter(Instruments.userid == event.source.user_id).first()
         instruments.status = "registing"
