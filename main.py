@@ -187,7 +187,7 @@ def joinevent(event):
 def unfollowevent(event):
     if db.session.query(Instruments).filter(Instruments.userid == event.source.user_id).first() != None:
 
-        instruments = db.session.query(Instruments).filter(Instruments.userid == event.source.user_id).all()
+        instruments = db.session.query(Instruments).filter(Instruments.userid == event.source.user_id).first()
         instruments.groupid = None
         instruments.userid = None
         instruments.message = None
