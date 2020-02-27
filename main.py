@@ -145,7 +145,7 @@ def dealmessage(event):
 
 def quiz(event):
     
-    instruments = db.session.quary(Instruments).filter(Instruments.status == "registed").all()
+    instruments = db.session.query(Instruments).filter(Instruments.status == "registed").all()
     quizmember = instruments.userid
     quizmembericon = instruments.icon
     
@@ -155,7 +155,7 @@ def quiz(event):
     db.session.add(answed)
     db.session.commit()
     
-    memberinstruments = db.session.quary(Instruments).filter(Instruments.userid == answer).first()
+    memberinstruments = db.session.query(Instruments).filter(Instruments.userid == answer).first()
     
     contents = []
     
@@ -188,7 +188,7 @@ def postbackevent(event):
             event.reply_token,
             TextSendMessage(text="登録しました")
             )
-    elif event.postback.data == db.session.quary(Instruments).filter(Instruments.userid == answer).first().answer:
+    elif event.postback.data == db.session.query(Instruments).filter(Instruments.userid == answer).first().answer:
         line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="正解！！！")
