@@ -128,7 +128,7 @@ def dealmessage(event):
             instruments = Instruments( event.source.group_id,user_id ,None ,None ,profile.picture_url)
             message = TextSendMessage(text="教えてくれてありがとう！\nよろしくね" + profile.display_name + "さん\n個人のほうで　自己紹介　って言ってみて")
             
-        else:
+        elif db.session.query(Instruments).filter(Instruments.userid == user_id).first() != None:
             instruments = db.session.query(Instruments).filter(Instruments.userid == user_id).first()
             instruments.groupid = event.source.group_id
             instruments.icon = profile.picture_url
@@ -137,7 +137,7 @@ def dealmessage(event):
         db.session.add(instruments)
         db.session.commit()
         
-        if message = "問題":
+        elif message = "問題":
             
             message = quiz(event)
 
