@@ -12,6 +12,8 @@ from linebot.models import (
 )
 from flask_sqlalchemy import SQLAlchemy
 
+from sqlalchemy import func
+
 import os
 
 app = Flask(__name__)
@@ -135,9 +137,38 @@ def dealmessage(event):
         db.session.add(instruments)
         db.session.commit()
         
-        
-        
+        if message = "問題":
+            
+            message = quiz(event)
+
+
     return message
+
+def quiz(event):
+    
+    instruments = db.session.quary(Instruments).filter(Instruments.status == "registed").all()
+    quizmember = instruments.userid
+    quizmembericon = instruments.icon
+    
+    count = session.query(func.count(quizmember)) - 1
+    num = random(0 ,count)
+    answer = Answer(quiznumber[num])
+    db.session.add(answed)
+    db.session.commit()
+    
+    memberinstruments = db.session.quary(Instruments).filter(Instruments.userid == answer).first()
+    
+    contents = list(range(13))
+    
+    for i in range(count):
+        quizmembername = enent.source.quizemember[i]
+        item = QuickReplyButton(action=PostbackAction(imageUrl = quizmembericon[i], label = quizmembername, display_text = quizmembername + "さん", data = quizemember[i])
+        contents.append(item)
+    
+    message = TextSendMessage(text = memberinstruments.message, quick_reply=QuickReply(items = item))
+    
+    return message
+
 @handler.add(PostbackEvent)
 def postbackevent(event):
     if event.postback.data == "retry":
@@ -158,6 +189,7 @@ def postbackevent(event):
             event.reply_token,
             TextSendMessage(text="登録しました")
             )
+    elif event.postback.data == 
     
 @handler.add(FollowEvent)
 def follow_event(event):
