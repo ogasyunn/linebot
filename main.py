@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, FollowEvent, JoinEvent, PostbackEvent, TextMessage, TextSendMessage, ImageSendMessage, VideoSendMessage, StickerSendMessage, AudioSendMessage, TemplateSendMessage,
+    MessageEvent, FollowEvent, UnfollowEvent, JoinEvent, PostbackEvent, TextMessage, TextSendMessage, ImageSendMessage, VideoSendMessage, StickerSendMessage, AudioSendMessage, TemplateSendMessage,
     ConfirmTemplate, PostbackAction, MessageAction, 
 )
 from flask_sqlalchemy import SQLAlchemy
@@ -182,6 +182,11 @@ def joinevent(event):
         event.reply_token,
         TextSendMessage(text="こんにちは！\n子のアカウントを追加してからみなさんの名前を教えてください")
         )
+
+@handler.add(UnfollowEvent)
+def unfollowevent(event):
+    instruments = db.session.query(Instruments).filter(Instruments.userid == event.source.user_id).first()
+    instruments.delete()
 
 if __name__ == "__main__":
 #    app.run()
