@@ -164,7 +164,7 @@ def quiz(event):
     for i in range(count):
         profile = line_bot_api.get_profile(quizmember[i].userid)
         quizmembername = profile.display_name
-        item = QuickReplyButton(action=PostbackAction(imageUrl = quizmembericon[i].icon, label = quizmembername, display_text = quizmembername + "さん", data = quizmember[i].userid))
+        item = QuickReplyButton(action=PostbackAction(label = quizmembername, display_text = quizmembername + "さん", data = quizmember[i].userid, imageUrl = quizmembericon[i].icon))
         contents.append(item)
     
     message = TextSendMessage(text = memberinstruments.message, quick_reply=QuickReply(items = contents))
@@ -197,9 +197,6 @@ def postbackevent(event):
         event.reply_token,
         TextSendMessage(text="正解！！！")
         )
-        answer = Answer(None)
-        db.session.add(answer)
-        db.session.commit()
     elif event.postback.data != answer.answer:
         line_bot_api.reply_message(
         event.reply_token,
@@ -212,10 +209,6 @@ def postbackevent(event):
     quizmembericon = db.session.query(Instruments.icon).filter(Instruments.status == "registed").all()
     
     count = len(instruments)
-    num = random.randint(0 ,count) - 1
-    answer = Answer(quizmember[num].userid)
-    db.session.add(answer)
-    db.session.commit()
     
     memberinstruments = db.session.query(Instruments).filter(Instruments.userid == quizmember[num].userid).first()
     
