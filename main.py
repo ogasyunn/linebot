@@ -188,7 +188,12 @@ def postbackevent(event):
             event.reply_token,
             TextSendMessage(text="登録しました")
             )
-    elif event.postback.data == db.session.quary(Instruments).filter(Instruments.userid == answer).first().answer
+    elif event.postback.data == db.session.quary(Instruments).filter(Instruments.userid == answer).first().answer:
+        line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text="正解！！！")
+        )
+
     
 @handler.add(FollowEvent)
 def follow_event(event):
