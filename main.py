@@ -161,7 +161,7 @@ def quiz(event):
     
     for i in range(count):
         quizmembername = enent.source.quizemember[i]
-        item = QuickReplyButton(action=PostbackAction(imageUrl = quizmembericon[i], label = quizmembername, display_text = quizmembername + "さん", data = quizemember[i])
+        item = QuickReplyButton(action=PostbackAction(imageUrl = quizmembericon[i], label = quizmembername, display_text = quizmembername + "さん", data = quizemember[i]))
         contents.append(item)
     
     message = TextSendMessage(text = memberinstruments.message, quick_reply=QuickReply(items = item))
