@@ -186,6 +186,7 @@ def joinevent(event):
 @handler.add(UnfollowEvent)
 def unfollowevent(event):
     if db.session.query(Instruments).filter(Instruments.userid == event.source.user_id).first() == None:
+        #
     
     else:
         instruments = db.session.query(Instruments).filter(Instruments.userid == event.source.user_id).all()
