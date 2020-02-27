@@ -128,6 +128,8 @@ def dealmessage(event):
         if db.session.query(Instruments).filter(Instruments.userid == user_id).first() == None:
             instruments = Instruments( event.source.group_id,user_id ,None ,None ,profile.picture_url)
             message = TextSendMessage(text="教えてくれてありがとう！\nよろしくね" + profile.display_name + "さん\n個人のほうで　自己紹介　って言ってみて")
+            db.session.add(instruments)
+            db.session.commit()
             
         elif usermessage == "問題":
                 
@@ -138,9 +140,8 @@ def dealmessage(event):
             instruments.groupid = event.source.group_id
             instruments.icon = profile.picture_url
             message = TextSendMessage(text="おっ、" + profile.display_name + "さんじゃないか\nこっちでもろしくね")
-
-        db.session.add(instruments)
-        db.session.commit()
+            db.session.add(instruments)
+            db.session.commit()
 
     return message
 
