@@ -133,14 +133,14 @@ def dealmessage(event):
             instruments.groupid = event.source.group_id
             instruments.icon = profile.picture_url
             message = TextSendMessage(text="おっ、" + profile.display_name + "さんじゃないか\nこっちでもろしくね")
-            
-        db.session.add(instruments)
-        db.session.commit()
         
         elif message = "問題":
             
             message = quiz(event)
 
+
+        db.session.add(instruments)
+        db.session.commit()
 
     return message
 
