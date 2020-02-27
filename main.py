@@ -152,8 +152,8 @@ def quiz(event):
     
     count = len(db.session.query(Instruments).filter(Instruments.status == "registed").all()) - 1
     num = random.randint(0 ,count)
-    answer = Answer(quiznumber[num])
-    db.session.add(answed)
+    answer = Answer(quizmember[num])
+    db.session.add(answer)
     db.session.commit()
     
     memberinstruments = db.session.query(Instruments).filter(Instruments.userid == answer).first()
