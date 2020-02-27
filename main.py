@@ -150,7 +150,7 @@ def quiz(event):
     quizmember = instruments.userid
     quizmembericon = instruments.icon
     
-    count = len(db.session.query(quizmember).all())
+    count = len(db.session.query(Instruments).filter(Instruments.status == "registed").all())
     num = random(0 ,count)
     answer = Answer(quiznumber[num])
     db.session.add(answed)
