@@ -8,7 +8,7 @@ from linebot.exceptions import (
 )
 from linebot.models import (
     MessageEvent, FollowEvent, UnfollowEvent, JoinEvent, PostbackEvent, TextMessage, TextSendMessage, ImageSendMessage, VideoSendMessage, StickerSendMessage, AudioSendMessage, TemplateSendMessage,
-    ConfirmTemplate, PostbackAction, MessageAction, QuickReplyButton
+    ConfirmTemplate, PostbackAction, MessageAction, QuickReplyButton, QuickReply
 )
 from flask_sqlalchemy import SQLAlchemy
 
