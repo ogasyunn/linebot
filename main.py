@@ -153,7 +153,7 @@ def quiz(event):
     count = len(db.session.query(Instruments).filter(Instruments.status == "registed").all()) - 1
     num = random.randint(0 ,count)
     answer = Answer(quizmember[num])
-    db.session.add(answer)
+    db.session.add(answed)
     db.session.commit()
     
     memberinstruments = db.session.query(Instruments).filter(Instruments.userid == answer).first()
@@ -165,7 +165,7 @@ def quiz(event):
         item = QuickReplyButton(action=PostbackAction(imageUrl = quizmembericon[i], label = quizmembername, display_text = quizmembername + "さん", data = quizemember[i]))
         contents.append(item)
     
-    message = TextSendMessage(text = memberinstruments.message, quick_reply=QuickReply(items = item))
+    message = TextSendMessage(text = memberinstruments.message, quick_reply=QuickReply(items = contents))
     
     return message
 
